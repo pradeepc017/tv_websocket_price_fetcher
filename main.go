@@ -180,7 +180,7 @@ func connect() {
 	backoff := time.Second
 
 	for {
-		log.Println("Connecting...")
+		logDebug("Connecting...")
 
 		ws, _, err := websocket.DefaultDialer.Dial(wsURL, http.Header{
 			"Origin":     []string{"https://www.tradingview.com"},
@@ -188,7 +188,7 @@ func connect() {
 		})
 
 		if err != nil {
-			log.Println("Dial error:", err)
+			logDebug("Dial error:", err)
 			time.Sleep(backoff)
 			if backoff < 30*time.Second {
 				backoff *= 2
@@ -196,7 +196,7 @@ func connect() {
 			continue
 		}
 
-		log.Println("Connected")
+		logDebug("Connected")
 		backoff = time.Second
 
 		session := genSession()
@@ -214,7 +214,7 @@ func connect() {
 		for {
 			_, msg, err := ws.ReadMessage()
 			if err != nil {
-				log.Println("Read error:", err)
+				logDebug("Read error:", err)
 				ws.Close()
 				break
 			}
