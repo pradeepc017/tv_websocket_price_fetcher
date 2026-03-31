@@ -10,6 +10,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"runtime"
 
 	"github.com/gorilla/websocket"
 )
@@ -247,6 +248,7 @@ func latestHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	flag.BoolVar(&debug, "debug", false, "enable debug logs")
 	flag.Parse()
+	runtime.GOMAXPROCS(1)
 
 	rand.Seed(time.Now().UnixNano())
 
