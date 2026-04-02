@@ -238,7 +238,15 @@ func latestHandler(w http.ResponseWriter, r *http.Request) {
 		if !(q.HasPrice && q.HasBid && q.HasAsk) {
 			continue
 		}
-		out[sym] = q
+		if sym == "OANDA:XAUUSD" {
+			out["gold"] = q
+		}else if sym == "OANDA:XAGUSD" {
+			out["silver"] = q
+		}else if sym == "OANDA:XPTUSD" {
+			out["platinum"] = q
+		}else if sym == "OANDA:XPDUSD" {
+			out["palladium"] = q
+		}
 	}
 
 	w.Header().Set("Content-Type", "application/json")
